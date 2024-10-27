@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Quieres ser mi novia?</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+  <!-- Contenedor principal -->
+  <div class="text-center">
+    <h1 class="text-3xl md:text-5xl font-bold text-pink-500 mb-6">¿Quieres ser mi novia?</h1>
+    
+    <div class="space-x-4">
+      <!-- Botón Sí -->
+      <button id="yesButton" class="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition duration-300">Sí</button>
+      
+      <!-- Botón No (movimiento en hover) -->
+      <button id="noButton" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg transition duration-300">No</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+      <h2 class="text-2xl font-bold mb-4">¡Estoy muy feliz!</h2>
+      <p class="text-gray-700 mb-4">Sabía que dirías que sí 😊</p>
+      <button id="closeModal" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    // Lógica del botón "No"
+    const noButton = document.getElementById("noButton");
+    const moveDistance = 50; // Distancia de movimiento en píxeles
+
+    noButton.addEventListener("mouseover", () => {
+      const rect = noButton.getBoundingClientRect();
+      const maxX = window.innerWidth - rect.width;
+      const maxY = window.innerHeight - rect.height;
+
+      // Calcula nuevas posiciones dentro de los límites de la pantalla
+      let newX = rect.x + (Math.random() > 0.5 ? moveDistance : -moveDistance);
+      let newY = rect.y + (Math.random() > 0.5 ? moveDistance : -moveDistance);
+
+      // Asegura que el botón no salga de los límites de la pantalla
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+
+      noButton.style.position = "absolute";
+      noButton.style.left = `${newX}px`;
+      noButton.style.top = `${newY}px`;
+    });
+
+    // Lógica del botón "Sí" y el modal
+    const yesButton = document.getElementById("yesButton");
+    const modal = document.getElementById("modal");
+    const closeModal = document.getElementById("closeModal");
+
+    yesButton.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+  </script>
+
+</body>
+</html>
